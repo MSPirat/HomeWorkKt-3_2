@@ -118,11 +118,11 @@ object NoteService {
 		return getNote
 	}
 
-	fun getComment(commentId: Int) {
+	fun getComment(noteId: Int) {
 		var getComment = false
 		val getCommentNote: MutableList<Comment> = mutableListOf()
 		for (newComment in comments) {
-			if (newComment.commentId == commentId && !newComment.deleteId) {
+			if (newComment.noteId == noteId && !newComment.deleteId) {
 				getCommentNote.add(newComment)
 				getComment = true
 			}
