@@ -8,4 +8,5 @@ data class Comment(
 	val date: Int,
 	val message: String,
 	val count: Int,
+	val deleteId: Boolean,
 )

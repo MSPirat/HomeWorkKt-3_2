@@ -19,7 +19,7 @@ object NoteService {
 	fun createComment(comment: Comment) {
 		var addComment = false
 		for (newNote in notes) {
-			if (newNote.noteId == comment.noteId && !newNote.deletedId) {
+			if (newNote.noteId == comment.noteId && !newNote.deleteId) {
 				comments += if (comments.isEmpty()) {
 					comment.copy(commentId = 0)
 				} else {
@@ -30,15 +30,61 @@ object NoteService {
 			}
 		}
 		if (!addComment) {
-			throw CommentNotFoundException("Note not found")
+			throw CommentNotFoundException("Comment not found")
 		}
 
 		fun deleteNote(noteId: Int) {
-			TODO()
+			var deleteNote = false
+			for (newNote in notes) {
+				if (newNote.noteId == noteId && !newNote.deleteId) {
+					notes[newNote.noteId] = newNote.copy(deleteId = true)
+					deleteNote = true
+				}
+			}
+			if (!deleteNote) {
+				throw NoteNotFoundException("Note not found")
+			}
 		}
 
 		fun deleteComment(commentId: Int) {
-			TODO()
+			var deleteComment = false
+			for (newComment in comments) {
+				if (newComment.commentId == commentId && !newComment.deleteId) {
+					comments[newComment.commentId] = newComment.copy(deleteId = true)
+					deleteComment = true
+				}
+			}
+			if (!deleteComment) {
+				throw CommentNotFoundException("Comment not found")
+			}
+		}
+
+		fun editNote(noteId: Int, newNote: Note): Note {
+			var editNote = false
+			for (newNote in notes) {
+				if (newNote.noteId == noteId && !newNote.deleteId) {
+					notes[noteId] = newNote
+					editNote = true
+				}
+			}
+			if (!editNote) {
+				throw NoteNotFoundException("Note not found")
+			}
+			return newNote
+		}
+
+		fun editComment(commentId: Int, newComment: Comment): Comment {
+			var editComment = false
+			for (newComment in comments) {
+				if (newComment.commentId == commentId && !newComment.deleteId) {
+					comments[commentId] = newComment
+					editComment = true
+				}
+			}
+			if (!editComment) {
+				throw CommentNotFoundException("Comment not found")
+			}
+			return newComment
 		}
 
 	}
