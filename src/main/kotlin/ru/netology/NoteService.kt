@@ -1,16 +1,56 @@
 package ru.netology
 
+/*
+open class Node(var id: Int)
+open class AllService<T : Node> {
+
+	private var nextId = 1
+
+	val elements = mutableListOf<T>()
+
+	fun add(element: T): T {
+		element.id = nextId++
+		elements.add(element)
+		return elements.last()
+	}
+
+	fun update(element: T): Boolean {
+		for ((index, node) in elements.withIndex()) {
+			if (node.id == element.id) {
+				elements[index] = element
+				return true
+			}
+		}
+		return false
+	}
+
+	fun getById(id: Int) = elements.find { it.id == id }
+}
+
+data class Comment(val text: String)
+
+class Note(id: Int, val comments: MutableList<Comment> = mutableListOf()) : Node(id)
+
+class NoteService : AllService<Note>() {
+	fun addComment(noteId: Int, comment: Comment) {
+		getById(noteId)?.comments?.add(comment)
+	}
+
+}
+*/
+
 object NoteService {
-	private var notes: MutableList<Note> = mutableListOf()
-	private var comments: MutableList<Comment> = mutableListOf()
+
+	var notes: MutableList<Note> = mutableListOf()
+	var comments: MutableList<Comment> = mutableListOf()
 	private var nextNoteId: Int = 0
 	private var nextCommentId: Int = 0
 
 	fun addNote(note: Note): Note {
-		notes += if (notes.isEmpty()) {
-			note.copy(noteId = 0)
+		if (notes.isEmpty()) {
+			notes.add(note.copy(noteId = 0))
 		} else {
-			note.copy(noteId = nextNoteId)
+			notes.add(note.copy(noteId = nextNoteId))
 		}
 		nextNoteId++
 		return notes.last()
@@ -20,12 +60,12 @@ object NoteService {
 		var createComment = false
 		for (newNote in notes) {
 			if (newNote.noteId == comment.noteId && !newNote.deleteId) {
-				comments += if (comments.isEmpty()) {
-					comment.copy(commentId = 0)
+				if (comments.isEmpty()) {
+					comments.add(comment.copy(commentId = 0))
 				} else {
-					comment.copy(commentId = nextCommentId)
+					comments.add(comment.copy(commentId = nextCommentId))
 				}
-				nextCommentId++
+				nextNoteId++
 				createComment = true
 			}
 		}

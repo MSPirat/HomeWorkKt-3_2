@@ -7,17 +7,28 @@ class NoteServiceTest {
 
 	@Test
 	fun addNote() {
-		val testNote = NoteService.addNote(Note(0, 1, "title", "text", privacy = true, deleteId = true))
+		val testNote = NoteService.addNote(Note(0, 1, "title", "text", false))
 		val result = NoteService.addNote(note = testNote)
 		assertTrue(result.noteId != 0)
+		assertEquals(result.noteId,1)
 	}
 
 	@Test
-	fun createComment() { //TODO
-//		val testNote = NoteService.add(Note(0, 1, "title", "text", privacy = true, deleteId = true))
-//		val testComment = Comment(1,1,0,1,5,"message",1,true)
-//		val result = NoteService.createComment(comment = testComment)
-//		assertEquals(0, result)
+	fun createComment() {
+		val testNote = NoteService.addNote(Note(2, 1, "title", "text", false))
+		val testComment = Comment(1,1,0,1,5,"message",false)
+		val result = NoteService.createComment(comment = testComment)
+		assertTrue(testComment.commentId != 0)
+		assertTrue(NoteService.comments.isNotEmpty())
+
+	}
+
+	@Test (expected = NoteNotFoundException::class)
+	fun shouldThrow() {
+
+		val testNote = NoteService.addNote(Note(0,1,"title", "text", false))
+		val testComment = Comment(1, 10, 100, 1, 5, "message", false)
+		val result = NoteService.createComment(comment = testComment)
 	}
 
 	@Test

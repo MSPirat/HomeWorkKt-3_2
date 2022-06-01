@@ -5,6 +5,5 @@ data class Note(
 	val ownerId: Int,
 	val title: String,
 	val text: String,
-	val privacy: Boolean,
-	val deleteId: Boolean,
+	val deleteId: Boolean = false,
 )

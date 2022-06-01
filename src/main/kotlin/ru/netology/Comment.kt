@@ -7,6 +7,5 @@ data class Comment(
 	val ownerId: Int,
 	val date: Int,
 	val message: String,
-	val count: Int,
-	val deleteId: Boolean,
+	val deleteId: Boolean = false,
 )
