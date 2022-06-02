@@ -54,6 +54,13 @@ object NoteService {
 		}
 		nextNoteId++
 		return notes.last()
+//		notes += if (notes.isEmpty()) {
+//			note.copy(noteId = 0)
+//		} else {
+//			note.copy(noteId = nextNoteId)
+//		}
+//		nextNoteId++
+//		return notes.last()
 	}
 
 	fun createComment(comment: Comment) {
@@ -69,6 +76,17 @@ object NoteService {
 				createComment = true
 			}
 		}
+//		for (newNote in notes) {
+//			if (newNote.noteId == comment.noteId && !newNote.deleteId) {
+//				comments += comment /*if (comments.isEmpty()) {
+//					comment.copy(commentId = 0)
+//				} else {
+//					comment.copy(commentId = nextCommentId)
+//				}
+//				nextCommentId++ */
+//				createComment = true
+//			}
+//		}
 		if (!createComment) {
 			throw CommentNotFoundException("Comment not found")
 		}
